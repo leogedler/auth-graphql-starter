@@ -12,7 +12,7 @@ const schema = require('./schema/schema');
 const app = express();
 
 // Replace with your mongoLab URI
-const MONGO_URI = '';
+const MONGO_URI = 'mongodb://localhost:27017/auth';
 
 // Mongoose's built in promise library is deprecated, replace it with ES2015 Promise
 mongoose.Promise = global.Promise;
@@ -58,6 +58,12 @@ app.use('/graphql', expressGraphQL({
 const webpackMiddleware = require('webpack-dev-middleware');
 const webpack = require('webpack');
 const webpackConfig = require('../webpack.config.js');
+const historyApiFallback = require("connect-history-api-fallback");
+app.use(
+  historyApiFallback({
+    verbose: false
+  })
+);
 app.use(webpackMiddleware(webpack(webpackConfig)));
 
 module.exports = app;
